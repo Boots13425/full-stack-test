@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>signup form</title>
+<style>
+body {
+  font-family: sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  width: 350px;
+  max-width: 90%;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px rebeccapurple;
+}
+
+button[type="submit"] {
+  background-color: #673ac7;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #512da8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.error {
+  color: red;
+  margin-top: 5px;
+  font-size: 0.9em;
+}
+.has_account {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.has_account a {
+  color: #663399;
+  text-decoration: none;
+}
+
+.has_account a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Sign Up to FETNET</h1>
+  <form name="signupForm" method="POST" action="/signup">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <label type="password">Confirm Password</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required>
+    
+    <button type="submit" name="submit" value="submit">Sign Up</button>
+    <p class="has_account">
+      Already have an account? <a href="login.html">Login</a>
+    </p>
+  </form>
+</div>
+<script>
+    // Get form values
+    const form = document.getElementById('signupForm');
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword');
+   
+    form.addEventListener('submit', (event) => {
+      event.preventDefault(); // Prevent actual form submission
+
+      document.querySelectorAll('error').forEach(el => el.textContent = '');
+
+      let isValid = true;
+       
+      if (name.value.trim() === ''){
+        document.getElementById('nameError').textContent = 'a username is required';
+        isValid = false;
+      }
+
+      if (email.value.trim() === ''){
+        document.getElementById('emailError').textContent = 'your email is required';
+        isValid = false;
+      } else if (!isValidEmail(email.value)){
+        document.getElementById('emailError').textContent =  'invalid email foamt';
+        isValid = false;
+      }
+      if (password.value.length < 8){
+        document.getElementById('passwordError').textContent = 'password must be atleast 8 characters';
+        isValid = false;
+      }
+
+      if (password.value != confirmPassword.value){
+        document.getElementById('confirmPasswordError').textContent = 'password mismatch';
+        isValid = false;
+      }
+      if (isValid) {
+        fetch('/signup', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: name.value,
+            email: email.value,
+            password: password.value,
+          }),
+        })
+        .then(response => response.json())
+        .then(date => {
+          if (data.success) {
+            alert('Succesful signup');
+            window.location.href = '/login';
+          } else {
+            alert('signup failled' + (data.message || 'an error occured'));
+            if (data.errors){
+              for(const field in data.errors){
+                if(document.getElementById(`${field}Error`)){
+                  document.getElementById(`${field}Error`).textContent = data.errors[field]
+                }
+              }
+            }
+          }
+        })
+        .catch(error => {
+          console.log('Error:', error);
+          alert('an error during signup process');
+        });
+      }
+    });
+   
+function isValidEmail(email){
+  const emailRegex = /^[^\s@]+@[^\s@+\.[^\s@]/;
+  return emailRegex.test(email);
+}
+ </script>
+
+</body>
+</html>

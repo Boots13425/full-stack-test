@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>affirmation </title>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f2f2f2;
+        }
+        .container{
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff; 
+            border-radius: 10px;
+            box-shadow: 0 0 10px rebeccapurple;
+         }
+         #affirmation{
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+         }
+
+    </style>
+</head>
+<body>
+    <a href="siginup.php">click here to sign up</a>
+    <div class="container">
+       <h1>Daily affirmation</h1> 
+        <div id="affirmation"></div>
+    </div>
+   <script>
+    const affirmations = [
+        "you are cabable and strong.",
+        "Believe in yourself",
+        "stay posoitive and fucosed",
+        "keep moving forward",
+        "your dreams are within reach",
+        "you are unique and special",
+        "you can do this",
+        "no be school go tell you thing for do"
+    ];
+    function getAffirmation()
+    {
+        const randomIndex = Math.floor(Math.random()*affirmations.length);
+        document.getElementById("affirmation").innerText=affirmations[randomIndex];
+    }
+    setInterval(getAffirmation,3000);
+    getAffirmation();
+   </script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+d
+     <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Collaboration Platform</title>
+     
+
+    <style>
+    	CSS 
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+
+} 
+
+header {
+    background-color: #ddd;
+    color: #ddd;
+    padding: 1em;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rebeccapurple;
+    max-width: auto;
+      
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav li {
+    margin-right: 20px;
+
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+}
+
+section {
+    background-color: #fff;
+    padding: 1em;
+    margin-bottom: 20px;
+    box-shadow: 0 0 18px rebeccapurple;
+    width: 400px;
+    border-radius: 10px;
+    
+}
+
+.card {
+    background-color: #fff;
+    padding: 1em;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-weight: bold;
+    margin-top: 0;
+}
+
+h2 {
+    font-weight: bold;
+    margin-top: 0;
+}
+
+#project-list, #task-list, #message-board {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#message-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0%;
+}
+
+#message-input {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+#send-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px
+}
+.light-mode {
+    background-color: #fff;
+    color: #658e9e;
+  }
+  
+  .dark-mode {
+    background-color: #222222;
+    color: #747070;
+  }
+  form{
+    padding-left: 90%;
+  }
+  #user-form{
+    padding: 0%;
+  }
+    .container{
+        max-width: 400px;
+        margin: 40px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        background-color: #fff; 
+        border-radius: 10px;
+        box-shadow: 0 0 10px rebeccapurple;
+     }
+     #affirmation{
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+     }
+#add-task{
+    background-color: #fff;
+    color: black;
+    padding: 3px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgb(135, 93, 177);
+    
+}
+#task-lists{
+    background-color: #fff;
+    padding: 1em;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgb(134, 80, 187);
+    border-radius: 7px;
+
+}
+    </style>
+    <!--automaitc time-->
+    <script>
+        function startTime() {
+          var today = new Date();
+          var h = today.getHours();
+          var m = today.getMinutes();
+          var s = today.getSeconds();
+          m = checkTime(m);
+          s = checkTime(s);
+          document.getElementById('txt').innerHTML =
+          h + ":" + m + ":" + s;
+          var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+          if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+          return i;
+        }
+        </script>
+<!--  automatic affirmation message-->
+<script>
+    const affirmations = [
+        "You are cabable and strong🧐",
+        "Believe in yourself😍",
+        "Stay posoitive and fucosed🥺",
+        "Keep moving forward🤩",
+        "Your dreams are within reach😎",
+        "You are unique and special😁",
+        "You can do this😊!",
+        "No be school go tell you thing for do😔",
+        "change your approach and you will see the result😊"
+    ];
+    function getAffirmation()
+    {
+        const randomIndex = Math.floor(Math.random()*affirmations.length);
+        document.getElementById("affirmation").innerText=affirmations[randomIndex];
+    }
+    setInterval(getAffirmation,3000);
+    getAffirmation();
+   </script>
+        </head>
+        
+ <body onload="startTime()">
+    <header>
+        <nav>
+            <ul>
+                
+                <li style="background-color:rgb(78, 81, 82); box-shadow:3px 3px grey;"><a href="#dashboard">Dashboard</a></li>
+                <li style="background-color:rgb(78, 81, 82); box-shadow:3px 3px grey;"><a href="#projects">Projects</a></li>
+                <li style="background-color:rgb(78, 81, 82); box-shadow:3px 3px grey;"><a href="#tasks">Tasks</a></li>
+                <li style="background-color:rgb(78, 81, 82); box-shadow:3px 3px grey;"><a href="#messages">Messages</a></li>
+          
+                </ul>
+        </nav>
+    </header>
+    <button id="mode-toggle">Toggle Mode</button>
+    <form action="logoutprocess.php" method="post">
+        <input type="submit" value="Logout">
+      </form>
+      <center>
+        <div id="txt"></div>
+      </center>
+      <div class="container">
+        <h1>Daily affirmation🎆</h1> 
+         <div id="affirmation"></div>
+     </div>
+    <main>
+        
+        <section id="dashboard">
+            <h1>Dashboard</h1>
+            <div class="card">
+                <h2>Project Overview</h2>
+                <ul>
+                    <li>Project Name:<span id="project-name"></span></li>
+                    <li>Deadline: <span id="project-deadline"><input name="cal" type="date"></span></li>
+                    <li>Progress: <span id="project-progress"></span></li>
+                </ul>
+            </div>
+        </section>
+        <section id="projects">
+            <h1>Projects</h1>
+            <div class="card">
+                <h2>Project List</h2>
+                <ul id="project-list">
+                    <!-- dynamically generated project list -->
+                     <form id="user-form">
+                         <input type="file" id="name" name="name"><br><br>
+                         <button>submit</button>
+                     </form>
+                        
+                </ul>
+            </div>
+        </section>
+        <section id="tasks">
+            <h1>Tasks</h1>
+            <div class="card">
+                <div id="cont">
+                <h2>Task List</h2>
+                <ul id="task-list">
+                    <!-- dynamically generated task list -->
+                     <input type="test" id="task" placeholder="enter the task">
+                     <button id="add-task">add task</button>
+                </ul>
+            </div>
+            <ul id="task-lists"></ul>
+            </div>
+        </section>
+        <section id="messages">
+            <h1>Messages</h1>
+            <div class="card">
+                <h2>Message Board</h2>
+                <ul id="message-board">
+                    <!-- dynamically generated message board -->
+                    <form id="message-form">
+                        <input type="text" id="message-input" placeholder="Type a message...">
+                        <button id="send-button">Send</button>
+                    </form>
+                </ul>
+
+            </div>
+        </section>
+    </main>
+    
+  <script>
+
+        const modeToggle = document.getElementById('mode-toggle');
+        const body = document.body;
+        
+        modeToggle.addEventListener('click', () => {
+          body.classList.toggle('dark-mode');   
+        
+        });
+      </script>
+
+      <script>
+        let taskList = document.getElementById("task-lists");
+        let taskInput = document.getElementById("task");
+
+        document.getElementById("add-task").addEventListener("click",addTask);
+
+        function addTask(){
+            let task = taskInput.value;
+            if(task){
+                let li=document.createElement("li");
+                li.textContent = task;
+                li.addEventListener("click",toogleDone);
+                taskList.appendChild(li);
+                taskInput.value="";
+            }
+        }
+        function toogleDone(event){
+            event.target.classList.toogle("done");
+        }
+      </script>
+    
+</body>
+</html>
+
